@@ -1,0 +1,66 @@
+<DOCTYPE html>
+
+<html ng-app="meuApp">
+
+	<head>
+		<script src="assets/dependencias/angular/angular.js"></script>
+		<script src="assets/js/meuApp.js"/></script>
+		<link rel="stylesheet" href="assets/dependencias/bootstrap/dist/css/bootstrap.css"/>		
+		<link rel="stylesheet" href="assets/css/app.css" />
+	</head>
+	
+	<body ng-controller="meuControle">
+		<div class="container">
+		
+			<div class="center" ng-show="(erro === undefined) && (dados === undefined)">
+				<span class="label label-info">
+					Carregando dados, aguarde!
+				</span>
+			</div>	
+			<div class="center" ng-show="(erro !== undefined) && (dados === undefined)">
+				<span class="label label-danger">
+					{{erro}}
+				</span>
+			</div>
+			<div class="center" ng-hide="dados === undefined"> 
+				<div class="center">
+					<p>
+						<strong>Cidade:</strong> 					
+						<input type="text" ng-model="editorNomeCidade" size="20"/>
+						<button ng-click="atualizarDados()">Buscar</button>
+					</p>
+						
+					<p>
+						<strong>Latitude:</strong> {{dados.city.coord.lon}}&#186;
+					</p>
+					<p>
+						<strong>Longitude:</strong> {{dados.city.coord.lat}}&#186;
+					</p >
+					
+					<hr/>
+					<div ng-repeat="fore in dados.list" class="quadro">	
+						<div class="pull-left center">
+							<img src="http://openweathermap.org/img/w/{{fore.weather[0].icon}}.png"/>
+						</div>
+						<div class="center">
+							<strong>
+								<span ng-show="(hoje.substring(0,10) | date: 'dd/MM/yyyy') === (fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy')">Hoje</span>
+								<span>
+									<span ng-hide="(hoje.substring(0,10) | date: 'dd/MM/yyyy') === (fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy')">
+										{{fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy'}}
+									</span>
+									- {{fore.dt_txt.substring(11,19) | date: 'HH:mm'}}
+ 								</span>
+							</strong>
+							<p class="text-left">
+								<strong>Minima:</strong> {{fore.main.temp_min}}&#186;<br/>
+								<strong>Maxima:</strong> {{fore.main.temp_max}}&#186
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

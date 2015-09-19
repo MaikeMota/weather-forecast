@@ -1,0 +1,28 @@
+*{
+	margin: 0;
+	padding:0;
+}
+
+.center{
+	width: 100%;
+	text-align: center;
+	margin: auto;
+	padding: 10px;
+}
+
+.text-left{
+	text-align: left;
+}
+
+.quadro{
+	max-width: 32%;
+	min-width: 15%;
+	min-height: 50px;
+	display: inline-block;
+	margin: 15px;
+	border-bottom: 1px black solid;
+}
+
+.container {
+	background-color: #C9F2FF;
+}
