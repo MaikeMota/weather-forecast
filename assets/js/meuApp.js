@@ -1,16 +1,17 @@
 angular.module('meuApp', [])
 	.controller('meuControle', function($scope, $http){
 		$scope.editorNomeCidade = 'Londrina';
+		$scope.langs = 	["PT", "EN"];
+		$scope.lang = $scope.langs[0];
 		$scope.nomeCidade = $scope.editorNomeCidade;	
 		$scope.hoje = new Date().toISOString();
 		
-		var urlBase = 'http://api.openweathermap.org/data/2.5/forecast?q={nomeCidade}&mode=json&units=metric&lang=pt';		
+		var urlBase = 'http://api.openweathermap.org/data/2.5/forecast?q={nomeCidade}&mode=json&units=metric&lang={lang}';		
 		
 		$scope.buscarDados = function(){
+			$scope.dados = undefined;		
 			
-			console.log($scope.nomeCidade);		
-			
-			var url = urlBase.replace("{nomeCidade}", $scope.nomeCidade);	
+			var url = urlBase.replace("{nomeCidade}", $scope.nomeCidade).replace("{lang}", $scope.lang);	
 			console.log(url);
 			
 			$http.get(url)
@@ -20,7 +21,7 @@ angular.module('meuApp', [])
 			})
 			.error(
 				function(resposta){
-					$scope.erro = 'Erro ao buscar Previsão do Tempo!\n';
+					$scope.erro = resposta;
 				}
 			);
 		};

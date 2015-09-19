@@ -7,6 +7,7 @@
 		<script src="assets/js/meuApp.js"/></script>
 		<link rel="stylesheet" href="assets/dependencias/bootstrap/dist/css/bootstrap.css"/>		
 		<link rel="stylesheet" href="assets/css/app.css" />
+		<meta charset="UTF-8"/>
 	</head>
 	
 	<body ng-controller="meuControle">
@@ -14,21 +15,47 @@
 		
 			<div class="center" ng-show="(erro === undefined) && (dados === undefined)">
 				<span class="label label-info">
-					Carregando dados, aguarde!
+					{{lang == "PT"? 'Carregando dados, por favor aguarde...' : 'Loading data, please wait...' }}
 				</span>
 			</div>	
 			<div class="center" ng-show="(erro !== undefined) && (dados === undefined)">
 				<span class="label label-danger">
-					{{erro}}
+					{{lang == "PT"? 'Ocorreu um erro ao carregar os dados' : 'An error occured when loading the data' }} {{erro !== null? null: ''}}
 				</span>
 			</div>
 			<div class="center" ng-hide="dados === undefined"> 
 				<div class="center">
-					<p>
-						<strong>Cidade:</strong> 					
-						<input type="text" ng-model="editorNomeCidade" size="20"/>
-						<button ng-click="atualizarDados()">Buscar</button>
-					</p>
+				
+				<form  class="form">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-8">
+								<div class="col-sm-2">
+									<label for="cidade" class="form-label">{{lang == "PT"? 'Cidade:' : 'City:'}}</label> 					
+								</div>
+								<div class="col-sm-10">
+									<input id="cidade" type="text" ng-model="editorNomeCidade" size="20" class="form-control"/>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="col-sm-4">
+									<select ng-model="lang" class="form-control" ng-change="atualizarDados()">
+										<option ng-repeat="lang in langs" ng-model="data.singleSelect" value="{{lang}}">
+											{{lang}}
+										</option>
+									</select>
+								</div>
+								<div class="col-sm-6">
+									<div class="col-sm-12">								
+									<button class="btn btn-success" ng-click="atualizarDados()">{{lang == "PT"? 'Buscar' : 'Search'}}</button>
+								</div>
+								</div>
+							</div>
+							
+						</div>
+							
+					</div>
+				</form>
 						
 					<p>
 						<strong>Latitude:</strong> {{dados.city.coord.lon}}&#186;
@@ -43,24 +70,29 @@
 							<img src="http://openweathermap.org/img/w/{{fore.weather[0].icon}}.png"/>
 						</div>
 						<div class="center">
-							<strong>
-								<span ng-show="(hoje.substring(0,10) | date: 'dd/MM/yyyy') === (fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy')">Hoje</span>
-								<span>
-									<span ng-hide="(hoje.substring(0,10) | date: 'dd/MM/yyyy') === (fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy')">
-										{{fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy'}}
+							<p>
+								<strong>{{fore.weather[0].description}}</strong><br/>
+								<hr/>
+								<strong>
+									<span ng-show="(hoje.substring(0,10) | date: 'dd/MM/yyyy') === (fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy')">{{lang == "PT"? 'Hoje' : 'Today' }}</span>
+									<span>
+										<span ng-hide="(hoje.substring(0,10) | date: 'dd/MM/yyyy') === (fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy')">
+											{{fore.dt_txt.substring(0,10) | date: 'dd/MM/yyyy'}}
+										</span>
+										- {{fore.dt_txt.substring(11,19) | date: 'HH:mm'}}
 									</span>
-									- {{fore.dt_txt.substring(11,19) | date: 'HH:mm'}}
- 								</span>
-							</strong>
-							<p class="text-left">
-								<strong>Minima:</strong> {{fore.main.temp_min}}&#186;<br/>
-								<strong>Maxima:</strong> {{fore.main.temp_max}}&#186
-							</p>
+								</strong><br/>
+								<strong>{{lang == "PT"? 'Minima:' : 'Lowest:'}} </strong> {{fore.main.temp_min}}&#186;<br/>
+								<strong>{{lang == "PT"? 'Máxima:' : 'Highest :'}}</strong> {{fore.main.temp_max}}&#186
+							</p>							
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			<footer class="center">
+			{{lang == "PT"? 'Criado por ' : 'Created by '}} <a href="http://facebook.com/maikemota" target="_blank">Maike Mota</a> 
+		</footer>
+		</div>		
 	</body>
 
 </html>
