@@ -6,7 +6,7 @@ angular.module('meuApp', [])
 		$scope.nomeCidade = $scope.editorNomeCidade;	
 		$scope.hoje = new Date().toISOString();
 		var APPKEY = "1bc1b95e1532678bc526b04ee54ebc01";
-		var urlBase = 'http://api.openweathermap.org/data/2.5/forecast?APPID={APPKEY}&q={nomeCidade}&mode=json&units=metric&lang={lang}';		
+		var urlBase = 'https://api.openweathermap.org/data/2.5/forecast?APPID={APPKEY}&q={nomeCidade}&mode=json&units=metric&lang={lang}';		
 		
 		$scope.buscarDados = function(){
 			$scope.dados = undefined;		
